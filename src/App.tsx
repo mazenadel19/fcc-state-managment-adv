@@ -1,24 +1,41 @@
-import { useMemo, useState } from "react";
+import {useState, useMemo, useCallback } from "react";
 import "./App.css";
 
-const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-function App() {
-  const sum = useMemo(
-    () =>
-      numbers.reduce((acc, curr) => {
-        return acc + curr;
-      }, 0),
-    [numbers]
-  );
+interface Iprops {
+  list: string[];
+  sortFunc: (a: string, b: string) => number;
+  callback?: boolean;
+}
 
-  const [names] = useState(["john", "jane", "joe"]);
-  const sortedNames = useMemo(() => [...names].sort(), [names]);
+function SortedList({ list, sortFunc, callback }: Iprops) {
+  console.log(!!callback);
+
+  console.log("SortedList rerendered");
+  const sortedNames = useMemo(() => {
+    console.log(
+      "sortedNames rerendered"
+    );
+
+    return [...list].sort(sortFunc);
+  }, [list, sortFunc]);
+  return <div>{sortedNames.join(", ")}</div>;
+}
+
+const sortFunc1 = (a: string, b: any) => a.localeCompare(b) * -1;
+function App() {
+  const sortFunc2 = useCallback((a: string, b: any) => a.localeCompare(b), []);
+  
+  const [n, setn] = useState(0);
 
   return (
     <div className="App">
-      <div>{sum}</div>
-      <div>{names.join(', ')}</div>
-      <div>{sortedNames.join(', ')}</div>
+      <button onClick={() => setn((old: number) => old + 1)}>{n}</button>
+      {/* <SortedList list={["john", "jane", "joe"]} sortFunc={sortFunc1} /> */}
+      <SortedList
+        list={["john", "jane", "joe"]}
+        sortFunc={sortFunc2}
+        callback
+      />
     </div>
   );
 }
