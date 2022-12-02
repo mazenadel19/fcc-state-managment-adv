@@ -4,28 +4,32 @@ import { Person } from './types';
 import './App.css';
 
 function App() {
-  // const [selectedId, setSelectedId] = useState<number>(1);
-  // const people = useHttp({ url: 'https://jsonplaceholder.typicode.com/users' });
-  const [selectedId, setSelectedId] = useState('');
+  const [data, setData] = useState<Person | undefined>();
   const people = useHttp({ url: '/names.json' });
+
+  const onSelectName = (name: string) => {
+    if (name) {
+      fetch(`/${name}.json`)
+        .then((res) => res.json())
+        .then((data) => setData(data));
+    }
+  };
 
   return (
     <div className="App">
       {(people as Person[])?.map(({ id, name }) => (
-        <button key={id} onClick={() => setSelectedId(name)}>
+        <button key={id} onClick={() => onSelectName(name)}>
           {name}
         </button>
       ))}
       <br />
-      <InnerComponent selectedId={selectedId} />
+      <InnerComponent selected={data} />
     </div>
   );
 }
 
 export default App;
 
-const InnerComponent = ({ selectedId }: { selectedId: number | string }) => {
-  const person = useHttp({ url: `/${selectedId}.json` });
-
-  return <div>{(person as Person)?.username}</div>;
+const InnerComponent = ({ selected }: { selected: Person | undefined }) => {
+  return selected ? <div>{(selected as Person).username}</div> : null;
 };
