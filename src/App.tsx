@@ -1,12 +1,8 @@
-import { useContext } from 'react';
-import { PokemonContext } from './context/PokemonContext';
 import './App.css';
-// import { useHttp } from './hooks/useHttp';
-// import { Pokemon } from './typescript/interfaces';
+import usePokemon from './hooks/usePokemon';
 
 function App() {
-  const { Pokemons } = useContext(PokemonContext);
-  // const data = useHttp({ url: '/pokemon.json' }) as Pokemon[];
+  const Pokemons = usePokemon();
 
   return (
     <div className="App">
