@@ -1,19 +1,29 @@
-import { createContext } from 'react';
-import { useHttp } from '../hooks/useHttp';
-import { Pokemon } from '../typescript/interfaces';
+import { createContext, ReactNode, useReducer } from 'react';
+import { IContext, IPokemonState, IState } from '../typescript/interfaces';
+import PokemonReducer from './reducers/PokemonReducer';
 
-// Interface
-interface IContext {
-  Pokemons: [] | Pokemon[];
-}
+export const PokemonContext = createContext<IContext>({ Pokemons: [], Search: '' });
 
-// pokemon context
-export const PokemonContext = createContext<IContext>({ Pokemons: [] });
+const initState: IState = {
+  Pokemons: [],
+  Search: ''
+};
 
-const PokemonProvider = ({ children }: { children: JSX.Element | JSX.Element[] }) => {
-  const data = useHttp({ url: '/pokemon.json' }) as Pokemon[];
+const PokemonProvider = ({ children }: { children: ReactNode }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [state, dispatch] = useReducer<any>(PokemonReducer, initState);
 
-  return <PokemonContext.Provider value={{ Pokemons: data }}>{children}</PokemonContext.Provider>;
+  console.log(state);
+  return (
+    <PokemonContext.Provider
+      value={{
+        Search: (state as IPokemonState).Search,
+        Pokemons: (state as IPokemonState).Pokemons,
+        dispatch
+      }}>
+      {children}
+    </PokemonContext.Provider>
+  );
 };
 
 export default PokemonProvider;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 export function useHttp({ url }: { url: string }) {
-  const [data, setData] = useState<unknown>(null);
+  const [data, setData] = useState<unknown>([]);
 
   //https://blog.logrocket.com/understanding-react-useeffect-cleanup-function/
   useEffect(() => {
