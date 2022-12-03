@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import ThemeProvider from './context/ThemeContext';
+import PokemonProvider from './context/PokemonContext';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <ThemeProvider>
+    <PokemonProvider>
       <App />
-    </ThemeProvider>
+    </PokemonProvider>
   </React.StrictMode>
 );

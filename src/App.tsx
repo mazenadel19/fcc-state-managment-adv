@@ -1,18 +1,16 @@
 import { useContext } from 'react';
-import { ThemeContext } from './context/ThemeContext';
-import { useHttp } from './hooks/useHttp';
-import { Pokemon } from './typescript/interfaces';
+import { PokemonContext } from './context/PokemonContext';
 import './App.css';
+// import { useHttp } from './hooks/useHttp';
+// import { Pokemon } from './typescript/interfaces';
 
 function App() {
-  const data = useHttp({ url: '/pokemon.json' });
-  const theme = useContext(ThemeContext);
-
-  console.log(theme);
+  const { Pokemons } = useContext(PokemonContext);
+  // const data = useHttp({ url: '/pokemon.json' }) as Pokemon[];
 
   return (
     <div className="App">
-      {(data as Pokemon[])?.map((pokemon) => {
+      {Pokemons?.map((pokemon) => {
         return <p key={pokemon.id}>{pokemon.name}</p>;
       })}
     </div>
