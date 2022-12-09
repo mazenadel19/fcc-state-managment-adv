@@ -13,7 +13,6 @@ const PokemonProvider = ({ children }: { children: ReactNode }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [state, dispatch] = useReducer<any>(PokemonReducer, initState);
 
-  console.log(state);
   return (
     <PokemonContext.Provider
       value={{
