@@ -21,13 +21,12 @@ export interface IContext {
 
 // reducer
 export interface IPokemonState {
-  Pokemons: Pokemons;
   Search: string;
 }
 // reducer
 export interface IAction {
-  type: 'SET_POKEMONS' | 'SET_SEARCH';
-  payload: Pokemons | string;
+  type: 'SET_SEARCH';
+  payload: string;
 }
 
 // state
