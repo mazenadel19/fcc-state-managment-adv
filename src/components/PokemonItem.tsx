@@ -6,7 +6,8 @@ export default function PokemonItem({ pokemon }: { pokemon: Pokemon }): JSX.Elem
       <div className="flex-1 flex flex-col p-8">
         <img
           className="w-32 h-32 flex-shrink-0 mx-auto bg-black rounded-full"
-          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
+          src={`/vite.svg`}
+          // src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
           alt=""
         />
         <h3 className="mt-6 text-gray-900 text-sm font-medium">{pokemon.name}</h3>

@@ -1,19 +1,19 @@
 import { useEffect } from 'react';
-import { useHttp } from '../hooks/useHttp';
+import { useQuery } from '@tanstack/react-query';
 import usePokemon from '../hooks/usePokemon';
 import { Pokemon } from '../typescript/interfaces';
 import PokemonItem from './PokemonItem';
 
 export default function PokemonList() {
   const { Pokemons, dispatch } = usePokemon();
-  const data = useHttp({ url: '/pokemon.json' }) as Pokemon[];
-  // const { data } = useQuery<Pokemon[]>(
-  //   ['Pokemon'],
-  //   () => fetch('/pokemon.json').then((res) => res.json()),
-  //   {
-  //     initialData: []
-  //   }
-  // );[]
+  const { data } = useQuery<Pokemon[]>(
+    ['Pokemon'],
+    () => fetch('/pokemon.json').then((res) => res.json()),
+    {
+      initialData: []
+    }
+  );
+
   useEffect(() => {
     if (data?.length && dispatch) {
       dispatch({ type: 'SET_POKEMONS', payload: data });
