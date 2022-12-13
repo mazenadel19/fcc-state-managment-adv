@@ -1,23 +1,18 @@
-import { useEffect } from 'react';
-import { useHttp } from '../hooks/useHttp';
+import { Link } from '@tanstack/react-location';
 import usePokemon from '../hooks/usePokemon';
-import { Pokemon } from '../typescript/interfaces';
 import PokemonItem from './PokemonItem';
 
 export default function PokemonList() {
-  const { Pokemons, dispatch } = usePokemon();
-  const data = useHttp({ url: '/pokemon.json' }) as Pokemon[];
-
-  useEffect(() => {
-    if (data?.length && dispatch) {
-      dispatch({ type: 'SET_POKEMONS', payload: data });
-    }
-  }, [data, dispatch]);
+  const { Pokemons } = usePokemon();
 
   return (
     <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-3">
       {Pokemons?.map((pokemon) => {
-        return <PokemonItem key={pokemon.id} pokemon={pokemon} />;
+        return (
+          <Link key={pokemon.id} to={`/pokemon/${pokemon.id}`}>
+            <PokemonItem key={pokemon.id} pokemon={pokemon} />;
+          </Link>
+        );
       })}
     </ul>
   );
